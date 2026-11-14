@@ -151,6 +151,7 @@ llm-dedup-rs/
 ├── assets/                     # Courbes SVG vectorielles générées automatiquement
 ├── tests/
 │   └── test_dedup.py           # Tests d'intégration et d'équivalence Rust <-> Python
+└── .github/workflows/ci.yml    # CI GitHub Actions (rustfmt, clippy, cargo test, pytest)
 ```
 
 ---

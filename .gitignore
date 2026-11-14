@@ -15,6 +15,3 @@ build/
 
 # OS
 .DS_Store
-
-# Local GitHub workflow (requires `workflow` OAuth scope to push)
-.github/
