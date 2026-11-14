@@ -149,9 +149,8 @@ llm-dedup-rs/
 │   ├── run_benchmarks.py       # Suite de benchmarks temps/threads/RSS + générateur SVG
 │   └── results.json            # Résultats exacts exportés en JSON
 ├── assets/                     # Courbes SVG vectorielles générées automatiquement
-├── tests/
-│   └── test_dedup.py           # Tests d'intégration et d'équivalence Rust <-> Python
-└── .github/workflows/ci.yml    # CI GitHub Actions (rustfmt, clippy, cargo test, pytest)
+└── tests/
+    └── test_dedup.py           # Tests d'intégration et d'équivalence Rust <-> Python
 ```
 
 ---
