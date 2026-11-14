@@ -1,0 +1,22 @@
+[build-system]
+requires = ["maturin>=1.7,<2.0"]
+build-backend = "maturin"
+
+[project]
+name = "llm-dedup-rs"
+version = "0.1.0"
+description = "High-performance LLM dataset cleaning and MinHash LSH deduplication powered by Rust, PyO3, and Rayon"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+classifiers = [
+    "Programming Language :: Rust",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "Programming Language :: Python :: 3",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+
+[tool.maturin]
+python-source = "python"
+module-name = "llm_dedup_rs._core"
+features = ["extension-module"]

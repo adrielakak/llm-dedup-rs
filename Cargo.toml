@@ -1,0 +1,19 @@
+[package]
+name = "llm_dedup_rs"
+version = "0.1.0"
+edition = "2021"
+description = "High-performance LLM dataset cleaning and MinHash LSH deduplication in Rust + PyO3"
+license = "MIT"
+
+[lib]
+name = "llm_dedup_rs"
+crate-type = ["cdylib", "rlib"]
+
+[features]
+default = []
+extension-module = ["pyo3/extension-module"]
+
+[dependencies]
+pyo3 = { version = "0.23", features = ["abi3-py39"] }
+rayon = "1.10"
+rustc-hash = "2.1"

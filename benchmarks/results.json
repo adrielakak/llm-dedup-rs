@@ -1,0 +1,124 @@
+{
+  "cpu_threads": 10,
+  "scaling": [
+    {
+      "n_docs": 1000,
+      "threads": 10,
+      "python_ms": 1345.65,
+      "rust_1t_ms": 12.96,
+      "rust_multi_ms": 3.63,
+      "python_throughput": 743.1,
+      "rust_multi_throughput": 275535.9,
+      "speedup_x": 370.78,
+      "speedup_pct": 36977.5,
+      "time_reduction_pct": 99.73
+    },
+    {
+      "n_docs": 2500,
+      "threads": 10,
+      "python_ms": 3488.5,
+      "rust_1t_ms": 30.53,
+      "rust_multi_ms": 6.68,
+      "python_throughput": 716.6,
+      "rust_multi_throughput": 374022.9,
+      "speedup_x": 521.91,
+      "speedup_pct": 52091.2,
+      "time_reduction_pct": 99.81
+    },
+    {
+      "n_docs": 5000,
+      "threads": 10,
+      "python_ms": 6782.33,
+      "rust_1t_ms": 65.9,
+      "rust_multi_ms": 14.63,
+      "python_throughput": 737.2,
+      "rust_multi_throughput": 341745.0,
+      "speedup_x": 463.57,
+      "speedup_pct": 46256.6,
+      "time_reduction_pct": 99.78
+    },
+    {
+      "n_docs": 10000,
+      "threads": 10,
+      "python_ms": 13585.96,
+      "rust_1t_ms": 123.97,
+      "rust_multi_ms": 26.46,
+      "python_throughput": 736.1,
+      "rust_multi_throughput": 377893.2,
+      "speedup_x": 513.4,
+      "speedup_pct": 51240.4,
+      "time_reduction_pct": 99.81
+    },
+    {
+      "n_docs": 20000,
+      "threads": 10,
+      "python_ms": 27286.82,
+      "rust_1t_ms": 372.35,
+      "rust_multi_ms": 80.75,
+      "python_throughput": 733.0,
+      "rust_multi_throughput": 247667.9,
+      "speedup_x": 337.9,
+      "speedup_pct": 33690.4,
+      "time_reduction_pct": 99.7
+    }
+  ],
+  "thread_scaling": [
+    {
+      "n_docs": 50000,
+      "threads": 1,
+      "elapsed_ms": 638.88,
+      "throughput_docs_per_sec": 78261.8,
+      "scaling_gain_pct": 0.0
+    },
+    {
+      "n_docs": 50000,
+      "threads": 2,
+      "elapsed_ms": 340.03,
+      "throughput_docs_per_sec": 147045.1,
+      "scaling_gain_pct": 87.9
+    },
+    {
+      "n_docs": 50000,
+      "threads": 4,
+      "elapsed_ms": 212.96,
+      "throughput_docs_per_sec": 234790.0,
+      "scaling_gain_pct": 200.0
+    },
+    {
+      "n_docs": 50000,
+      "threads": 8,
+      "elapsed_ms": 211.11,
+      "throughput_docs_per_sec": 236843.5,
+      "scaling_gain_pct": 202.6
+    },
+    {
+      "n_docs": 50000,
+      "threads": 10,
+      "elapsed_ms": 158.74,
+      "throughput_docs_per_sec": 314989.0,
+      "scaling_gain_pct": 302.5
+    }
+  ],
+  "memory": {
+    "n_docs": 20000,
+    "baseline_rss_mb": 25.22,
+    "python_peak_rss_mb": 157.47,
+    "rust_peak_rss_mb": 65.91,
+    "python_net_mb": 132.25,
+    "rust_net_mb": 40.69,
+    "ram_reduction_pct": 69.2,
+    "total_rss_reduction_pct": 58.1
+  },
+  "corpus_stats": {
+    "total_docs": 20000,
+    "filtered_quality": 1000,
+    "filtered_quality_pct": 5.0,
+    "exact_duplicates_removed": 4000,
+    "exact_duplicates_pct": 20.0,
+    "fuzzy_duplicates_removed": 2998,
+    "fuzzy_duplicates_pct": 14.99,
+    "kept_docs": 12002,
+    "retention_pct": 60.01,
+    "py_kept_docs": 12003
+  }
+}

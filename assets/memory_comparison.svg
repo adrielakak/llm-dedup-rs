@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 340" width="880" height="340">
+  <rect width="880" height="340" rx="12" fill="#0d1117" stroke="#30363d" stroke-width="1"/>
+  <text x="45" y="34" fill="#f0f6fc" font-size="18" font-weight="700" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif">Empreinte Mémoire Nette (Pic RAM durant l'exécution)</text>
+  <text x="45" y="54" fill="#8b949e" font-size="13" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif">Surcoût RAM mesuré par processus isolé (ru_maxrss) sur 20,000 documents</text>
+
+  <rect x="630" y="20" width="205" height="32" rx="16" fill="#132a1c" stroke="#2ea043" stroke-width="1"/>
+  <text x="733" y="40" text-anchor="middle" fill="#3fb950" font-size="12.5" font-weight="700" font-family="ui-monospace, SFMono-Regular, Menlo, monospace">-69.2% de RAM</text>
+
+  <!-- Python Bar -->
+  <text x="194" y="121" text-anchor="end" fill="#c9d1d9" font-size="14" font-weight="600" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Python Pur (list/dict/int)</text>
+  <rect x="210" y="95" width="500.0" height="40" rx="6" fill="#f85149" fill-opacity="0.85"/>
+  <text x="722.0" y="120" fill="#ff7b72" font-size="13" font-weight="700" font-family="ui-monospace, SFMono-Regular, Menlo, monospace">132.2 MiB (pic total: 157.5 MiB)</text>
+
+  <!-- Rust Bar -->
+  <text x="194" y="201" text-anchor="end" fill="#c9d1d9" font-size="14" font-weight="600" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Rust PyO3 (flat Vec&lt;u32&gt;)</text>
+  <rect x="210" y="175" width="153.8" height="40" rx="6" fill="#3fb950" fill-opacity="0.90"/>
+  <text x="375.8" y="200" fill="#3fb950" font-size="13" font-weight="700" font-family="ui-monospace, SFMono-Regular, Menlo, monospace">40.7 MiB (pic total: 65.9 MiB)</text>
+
+  <text x="45" y="298" fill="#8b949e" font-size="12" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Baseline corpus seul : 25.2 MiB • Rust stocke toutes les signatures MinHash dans un buffer contigu sans objets heap Python.</text>
+</svg>

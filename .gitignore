@@ -1,0 +1,20 @@
+# Rust
+target/
+**/*.rs.bk
+
+# Python
+__pycache__/
+*.py[cod]
+*.so
+*.pyd
+.venv/
+.pytest_cache/
+*.egg-info/
+dist/
+build/
+
+# OS
+.DS_Store
+
+# Local GitHub workflow (requires `workflow` OAuth scope to push)
+.github/
