@@ -169,8 +169,8 @@ def _nice_max(val: float) -> float:
 
 def render_execution_time_svg(scaling: list[dict[str, Any]], out_path: Path) -> None:
     """Render SVG line chart comparing Python vs Rust 1-Thread vs Rust Multi-Core execution time."""
-    width, height = 880, 460
-    pad_l, pad_r, pad_t, pad_b = 85, 45, 85, 75
+    width, height = 880, 465
+    pad_l, pad_r, pad_t, pad_b = 85, 45, 92, 75
     plot_w = width - pad_l - pad_r
     plot_h = height - pad_t - pad_b
 
@@ -208,7 +208,7 @@ def render_execution_time_svg(scaling: list[dict[str, Any]], out_path: Path) -> 
     dots = []
     for i, row in enumerate(scaling):
         x = x_pos(i)
-        n_label = f"{row['n_docs'] // 1000}k" if row["n_docs"] >= 1000 else str(row["n_docs"])
+        n_label = f"{row['n_docs'] / 1000:g}k" if row["n_docs"] >= 1000 else str(row["n_docs"])
         x_labels.append(
             f'<text x="{x:.1f}" y="{height - pad_b + 24}" text-anchor="middle" fill="#8b949e" font-size="12" font-family="ui-monospace, SFMono-Regular, Menlo, monospace">{n_label} docs</text>'
         )
@@ -224,10 +224,10 @@ def render_execution_time_svg(scaling: list[dict[str, Any]], out_path: Path) -> 
     svg = f"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {width} {height}" width="{width}" height="{height}">
   <rect width="{width}" height="{height}" rx="12" fill="#0d1117" stroke="#30363d" stroke-width="1"/>
   <text x="{pad_l}" y="34" fill="#f0f6fc" font-size="18" font-weight="700" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif">Temps d'exécution : Python Pur vs Rust (PyO3 + Rayon)</text>
-  <text x="{pad_l}" y="54" fill="#8b949e" font-size="13" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif">Pipeline complet : Nettoyage HTML + Filtre qualité + Dédup exacte + MinHash LSH (128 perm.)</text>
+  <text x="{pad_l}" y="58" fill="#8b949e" font-size="13" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif">Pipeline complet : Nettoyage HTML + Filtre qualité + Dédup exacte + MinHash LSH (128 perm.)</text>
 
-  <rect x="{width - 265}" y="20" width="220" height="32" rx="16" fill="#132a1c" stroke="#2ea043" stroke-width="1"/>
-  <text x="{width - 155}" y="40" text-anchor="middle" fill="#3fb950" font-size="12.5" font-weight="700" font-family="ui-monospace, SFMono-Regular, Menlo, monospace">-{time_reduction_pct:.1f}% temps (+{speedup_pct:.0f}%)</text>
+  <rect x="{width - 265}" y="14" width="220" height="28" rx="14" fill="#132a1c" stroke="#2ea043" stroke-width="1"/>
+  <text x="{width - 155}" y="32" text-anchor="middle" fill="#3fb950" font-size="12.5" font-weight="700" font-family="ui-monospace, SFMono-Regular, Menlo, monospace">-{time_reduction_pct:.1f}% temps (+{speedup_pct:.0f}%)</text>
 
   {"".join(grid_lines)}
   <line x1="{pad_l}" y1="{pad_t + plot_h}" x2="{width - pad_r}" y2="{pad_t + plot_h}" stroke="#30363d" stroke-width="1.5"/>
@@ -258,8 +258,8 @@ def render_execution_time_svg(scaling: list[dict[str, Any]], out_path: Path) -> 
 
 def render_thread_scaling_svg(thread_scaling: list[dict[str, Any]], out_path: Path) -> None:
     """Render SVG chart of Rust throughput (docs/sec) and scaling efficiency % across thread counts."""
-    width, height = 880, 420
-    pad_l, pad_r, pad_t, pad_b = 85, 45, 85, 70
+    width, height = 880, 425
+    pad_l, pad_r, pad_t, pad_b = 85, 45, 92, 70
     plot_w = width - pad_l - pad_r
     plot_h = height - pad_t - pad_b
 
@@ -298,10 +298,11 @@ def render_thread_scaling_svg(thread_scaling: list[dict[str, Any]], out_path: Pa
         y = y_pos(r["throughput_docs_per_sec"])
         gain_pct = r["scaling_gain_pct"]
         badge = "baseline" if i == 0 else f"+{gain_pct:.0f}%"
+        anchor = "start" if i == 0 else ("end" if i == n_pts - 1 else "middle")
         labels_and_dots.append(
             f'<text x="{x:.1f}" y="{height - pad_b + 24}" text-anchor="middle" fill="#8b949e" font-size="12" font-family="ui-monospace, SFMono-Regular, Menlo, monospace">{r["threads"]} thread{"s" if r["threads"] > 1 else ""}</text>'
             f'<circle cx="{x:.1f}" cy="{y:.1f}" r="5.5" fill="#58a6ff" stroke="#0d1117" stroke-width="2"/>'
-            f'<text x="{x:.1f}" y="{y - 14:.1f}" text-anchor="middle" fill="#79c0ff" font-size="11.5" font-weight="700" font-family="ui-monospace, SFMono-Regular, Menlo, monospace">{r["throughput_docs_per_sec"]:,.0f} docs/s ({badge})</text>'
+            f'<text x="{x:.1f}" y="{y - 14:.1f}" text-anchor="{anchor}" fill="#79c0ff" font-size="11.5" font-weight="700" font-family="ui-monospace, SFMono-Regular, Menlo, monospace">{r["throughput_docs_per_sec"]:,.0f} docs/s ({badge})</text>'
         )
 
     max_gain = thread_scaling[-1]["scaling_gain_pct"]
@@ -316,10 +317,10 @@ def render_thread_scaling_svg(thread_scaling: list[dict[str, Any]], out_path: Pa
   </defs>
   <rect width="{width}" height="{height}" rx="12" fill="#0d1117" stroke="#30363d" stroke-width="1"/>
   <text x="{pad_l}" y="34" fill="#f0f6fc" font-size="18" font-weight="700" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif">Scalabilité Multi-Cœurs (Rayon sans GIL)</text>
-  <text x="{pad_l}" y="54" fill="#8b949e" font-size="13" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif">Débit mesuré (documents/seconde) sur {n_docs_tested:,} documents selon le nombre de threads</text>
+  <text x="{pad_l}" y="58" fill="#8b949e" font-size="13" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif">Débit mesuré (documents/seconde) sur {n_docs_tested:,} documents selon le nombre de threads</text>
 
-  <rect x="{width - 245}" y="20" width="200" height="32" rx="16" fill="#11223a" stroke="#388bfd" stroke-width="1"/>
-  <text x="{width - 145}" y="40" text-anchor="middle" fill="#79c0ff" font-size="12.5" font-weight="700" font-family="ui-monospace, SFMono-Regular, Menlo, monospace">+{max_gain:.0f}% débit multi-cœurs</text>
+  <rect x="{width - 245}" y="14" width="200" height="28" rx="14" fill="#11223a" stroke="#388bfd" stroke-width="1"/>
+  <text x="{width - 145}" y="32" text-anchor="middle" fill="#79c0ff" font-size="12.5" font-weight="700" font-family="ui-monospace, SFMono-Regular, Menlo, monospace">+{max_gain:.0f}% débit multi-cœurs</text>
 
   {"".join(grid)}
   <line x1="{pad_l}" y1="{pad_t + plot_h}" x2="{width - pad_r}" y2="{pad_t + plot_h}" stroke="#30363d" stroke-width="1.5"/>
@@ -334,13 +335,13 @@ def render_thread_scaling_svg(thread_scaling: list[dict[str, Any]], out_path: Pa
 
 def render_memory_svg(mem: dict[str, Any], out_path: Path) -> None:
     """Render SVG bar chart comparing peak memory overhead (MiB) of Python vs Rust."""
-    width, height = 880, 340
-    pad_l, pad_r, pad_t = 210, 80, 95
+    width, height = 880, 345
+    pad_l, pad_r, pad_t = 210, 260, 100
     bar_area_w = width - pad_l - pad_r
 
     py_delta = mem["python_net_mb"]
     rs_delta = mem["rust_net_mb"]
-    max_mb = max(py_delta, rs_delta, 1.0) * 1.18
+    max_mb = max(py_delta, rs_delta, 1.0) * 1.10
 
     py_w = max(8.0, (py_delta / max_mb) * bar_area_w)
     rs_w = max(8.0, (rs_delta / max_mb) * bar_area_w)
@@ -348,10 +349,10 @@ def render_memory_svg(mem: dict[str, Any], out_path: Path) -> None:
     svg = f"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {width} {height}" width="{width}" height="{height}">
   <rect width="{width}" height="{height}" rx="12" fill="#0d1117" stroke="#30363d" stroke-width="1"/>
   <text x="45" y="34" fill="#f0f6fc" font-size="18" font-weight="700" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif">Empreinte Mémoire Nette (Pic RAM durant l'exécution)</text>
-  <text x="45" y="54" fill="#8b949e" font-size="13" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif">Surcoût RAM mesuré par processus isolé (ru_maxrss) sur {mem["n_docs"]:,} documents</text>
+  <text x="45" y="58" fill="#8b949e" font-size="13" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif">Surcoût RAM mesuré par processus isolé (ru_maxrss) sur {mem["n_docs"]:,} documents</text>
 
-  <rect x="{width - 250}" y="20" width="205" height="32" rx="16" fill="#132a1c" stroke="#2ea043" stroke-width="1"/>
-  <text x="{width - 147}" y="40" text-anchor="middle" fill="#3fb950" font-size="12.5" font-weight="700" font-family="ui-monospace, SFMono-Regular, Menlo, monospace">-{mem["ram_reduction_pct"]:.1f}% de RAM</text>
+  <rect x="{width - 250}" y="14" width="205" height="28" rx="14" fill="#132a1c" stroke="#2ea043" stroke-width="1"/>
+  <text x="{width - 147}" y="32" text-anchor="middle" fill="#3fb950" font-size="12.5" font-weight="700" font-family="ui-monospace, SFMono-Regular, Menlo, monospace">-{mem["ram_reduction_pct"]:.1f}% de RAM</text>
 
   <!-- Python Bar -->
   <text x="{pad_l - 16}" y="{pad_t + 26}" text-anchor="end" fill="#c9d1d9" font-size="14" font-weight="600" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Python Pur (list/dict/int)</text>
@@ -363,7 +364,7 @@ def render_memory_svg(mem: dict[str, Any], out_path: Path) -> None:
   <rect x="{pad_l}" y="{pad_t + 80}" width="{rs_w:.1f}" height="40" rx="6" fill="#3fb950" fill-opacity="0.90"/>
   <text x="{pad_l + rs_w + 12:.1f}" y="{pad_t + 105}" fill="#3fb950" font-size="13" font-weight="700" font-family="ui-monospace, SFMono-Regular, Menlo, monospace">{rs_delta:.1f} MiB (pic total: {mem["rust_peak_rss_mb"]:.1f} MiB)</text>
 
-  <text x="45" y="298" fill="#8b949e" font-size="12" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Baseline corpus seul : {mem["baseline_rss_mb"]:.1f} MiB • Rust stocke toutes les signatures MinHash dans un buffer contigu sans objets heap Python.</text>
+  <text x="45" y="303" fill="#8b949e" font-size="12" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">Baseline corpus seul : {mem["baseline_rss_mb"]:.1f} MiB • Rust stocke toutes les signatures MinHash dans un buffer contigu sans objets heap Python.</text>
 </svg>
 """
     out_path.write_text(svg, encoding="utf-8")
